@@ -285,7 +285,7 @@ public class frmDirectorStorage extends javax.swing.JFrame {
                 id_order = Integer.parseInt((tblOrder1.getValueAt(tblOrder1.getSelectedRow(), 8)).toString());
                 order = order.getById(id_order);
                 if (order!=null){
-                     order.OrderInAccepted();
+                     order.InAccepted();
                       addTabelOrder1();
                       addTabelOrder2();
                       addTabelPackingLists();

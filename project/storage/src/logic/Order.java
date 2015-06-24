@@ -197,7 +197,7 @@ public class Order implements IRepository<Order>{
     }
     
     //Добавить заявку.
-    public void addOrder(Customer customer, District district, ArrayList<GoodsPosition> goodsPositions){
+    public void addWithGoods(Customer customer, District district, ArrayList<GoodsPosition> goodsPositions){
         date = new Date();
         double _size = 0;
         int _amount = 0;
@@ -249,13 +249,13 @@ public class Order implements IRepository<Order>{
     }
     
     //выставить заявку в состояние Принята.
-    public void OrderInAccepted(){
+    public void InAccepted(){
         //Если заявка на рассмотрении, мы можем перевести ее в статус Принята.
         if(this.getState().equals(OrderState1)){
             int id_packingList;
             //Проверяем, есть ли открытая траспортная накладная по данному району
             _packingList = new PackingList();
-            _packingList = _packingList.getOpenPackingList(this.district);
+            _packingList = _packingList.getOpen(this.district);
             if(_packingList == null){
                 _packingList = new PackingList();
                 _packingList.setDistrict(this.district);

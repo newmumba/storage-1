@@ -98,21 +98,21 @@ public class Storage {
         District _district = new District(); 
         Customer _customer = new Customer(); 
         Order firstOrder = new Order();
-        firstOrder.setCustomer(_customer.getById(28));
+        firstOrder.setCustomer(_customer.getById(1));
         firstOrder.setDate(date);
         firstOrder.setState("В ожидании");
         firstOrder.setAmount(5000);
         firstOrder.setSize(6.4);
-        firstOrder.setDistrict(_district.getById(5));
+        firstOrder.setDistrict(_district.getById(1));
         firstOrder.add();
         
         Order secondOrder = new Order();
-        secondOrder.setCustomer(_customer.getById(27));
+        secondOrder.setCustomer(_customer.getById(2));
         secondOrder.setDate(date);
         secondOrder.setState("Принята");
         secondOrder.setAmount(7000);
         secondOrder.setSize(10.6);
-        secondOrder.setDistrict(_district.getById(4));
+        secondOrder.setDistrict(_district.getById(2));
         secondOrder.add();
     }
     
@@ -280,7 +280,7 @@ public class Storage {
             secondGoodsPosition.setCount(3);
             goodsPositions.add(secondGoodsPosition);
             
-            order.addOrder(customer.getById(1), district.getById(1), goodsPositions);
+            order.addWithGoods(customer.getById(1), district.getById(1), goodsPositions);
             */
             /*
             Order order = new Order();
@@ -301,8 +301,8 @@ public class Storage {
             
             
             //frmAddOrder frmStart = new frmAddOrder();
-            //frmMain frmStart = new frmMain();
-            frmDirectorStorage frmStart = new frmDirectorStorage();
+            frmMain frmStart = new frmMain();
+            //frmDirectorStorage frmStart = new frmDirectorStorage();
             frmStart.main(args);
             //con.CloseConnection();
         }else{

@@ -5,12 +5,15 @@
  */
 package logic;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import util.CreatingConnection;
 
 /**
  *
@@ -19,6 +22,8 @@ import static org.junit.Assert.*;
 public class CarTest {
     
     public CarTest() {
+        CreatingConnection con = CreatingConnection.getInstance();
+        con.Connection();
     }
     
     @BeforeClass
@@ -39,7 +44,7 @@ public class CarTest {
         Car instance = new Car();
         instance.setName(name);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 
     /**
@@ -52,7 +57,7 @@ public class CarTest {
         Car instance = new Car();
         instance.setSize(size);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 
     /**
@@ -65,7 +70,7 @@ public class CarTest {
         Car instance = new Car();
         instance.setState(state);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 
     /**
@@ -78,7 +83,7 @@ public class CarTest {
         Car instance = new Car();
         instance.setDate(date);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 
     /**
@@ -87,12 +92,12 @@ public class CarTest {
     @Test
     public void testGetId() {
         System.out.println("getId");
-        Car instance = new Car();
+        Car instance = new Car("test", 10, true, new Date());
         int expResult = 0;
         int result = instance.getId();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 
     /**
@@ -101,12 +106,12 @@ public class CarTest {
     @Test
     public void testGetName() {
         System.out.println("getName");
-        Car instance = new Car();
-        String expResult = "";
+        Car instance = new Car("test", 10, true, new Date());
+        String expResult = "test";
         String result = instance.getName();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 
     /**
@@ -115,12 +120,12 @@ public class CarTest {
     @Test
     public void testGetSize() {
         System.out.println("getSize");
-        Car instance = new Car();
-        double expResult = 0.0;
+        Car instance = new Car("test", 10, true, new Date());
+        double expResult = 10.0;
         double result = instance.getSize();
         assertEquals(expResult, result, 0.0);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 
     /**
@@ -129,26 +134,27 @@ public class CarTest {
     @Test
     public void testGetState() {
         System.out.println("getState");
-        Car instance = new Car();
-        boolean expResult = false;
+        Car instance = new Car("test", 10, true, new Date());
+        boolean expResult = true;
         boolean result = instance.getState();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 
     /**
      * Test of getDate method, of class Car.
      */
     @Test
-    public void testGetDate() {
+    public void testGetDate() throws ParseException {
+        Date dateTest1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2014-10-10 10:10:10");
         System.out.println("getDate");
-        Car instance = new Car();
-        Date expResult = null;
+        Car instance = new Car("test", 10, true, dateTest1);
+        Date expResult = dateTest1;
         Date result = instance.getDate();
-        assertEquals(expResult, result);
+        assertEquals(expResult, dateTest1);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 
     /**
@@ -157,12 +163,12 @@ public class CarTest {
     @Test
     public void testAdd() {
         System.out.println("add");
-        Car instance = new Car();
+        Car instance = new Car("test", 10, false, new Date());
         int expResult = 0;
         int result = instance.add();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 
     /**
@@ -176,22 +182,7 @@ public class CarTest {
         ArrayList<Car> result = instance.getAll();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getById method, of class Car.
-     */
-    @Test
-    public void testGetById() {
-        System.out.println("getById");
-        int id = 0;
-        Car instance = new Car();
-        Car expResult = null;
-        Car result = instance.getById(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 
     /**
@@ -200,61 +191,9 @@ public class CarTest {
     @Test
     public void testSave() {
         System.out.println("save");
-        Car instance = new Car();
+        Car instance = new Car(2, "test", 10.0, true, new Date());
         instance.save();
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getFree method, of class Car.
-     */
-    @Test
-    public void testGetFree() {
-        System.out.println("getFree");
-        Car instance = new Car();
-        ArrayList<Car> expResult = null;
-        ArrayList<Car> result = instance.getFree();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of Approve method, of class Car.
-     */
-    @Test
-    public void testApprove() {
-        System.out.println("Approve");
-        Car instance = new Car();
-        instance.Approve();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of InFree method, of class Car.
-     */
-    @Test
-    public void testInFree() {
-        System.out.println("InFree");
-        Car instance = new Car();
-        instance.InFree();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getPackingList method, of class Car.
-     */
-    @Test
-    public void testGetPackingList() {
-        System.out.println("getPackingList");
-        Car instance = new Car();
-        PackingList expResult = null;
-        PackingList result = instance.getPackingList();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 }

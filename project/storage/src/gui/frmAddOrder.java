@@ -8,6 +8,7 @@ package gui;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import logic.Customer;
 import logic.District;
 import logic.Goods;
 import logic.Order;
@@ -20,11 +21,15 @@ public class frmAddOrder extends javax.swing.JFrame {
 
      ArrayList<District> districts = new ArrayList<>();
      ArrayList<Goods> allGoods;
+     Customer _customer = new Customer();
     /**
      * Creates new form frmAddOrder
      */
-    public frmAddOrder() {
+    public frmAddOrder() {  }
+
+    frmAddOrder(Customer customer) {
         super("Добавление заявки"); //Заголовок окна
+        _customer = customer;
         initComponents();
         
         District district = new District();
@@ -132,7 +137,7 @@ public class frmAddOrder extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
                     .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -182,13 +187,19 @@ public class frmAddOrder extends javax.swing.JFrame {
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
+        this.dispose();
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
-        System.err.println(districts.get(2).getDistrict());
-        System.err.println(cmbDistricts.getSelectedIndex());
+        
+        
+        System.err.println();
+        Goods _goods = new Goods();
+        _goods = allGoods.get(tblGoods.getSelectedRow());
+        addCount addCount = new addCount(_goods);
+        addCount.setVisible(true);
+        //System.err.println(districts.get(2).getDistrict());
+        //System.err.println(cmbDistricts.getSelectedIndex());
     }//GEN-LAST:event_btnAddActionPerformed
 
     /**

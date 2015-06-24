@@ -74,6 +74,11 @@ public class frmMain extends javax.swing.JFrame {
                 OKMouseClicked(evt);
             }
         });
+        OK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OKActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,6 +145,10 @@ public class frmMain extends javax.swing.JFrame {
     private void CloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CloseActionPerformed
+
+    private void OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_OKActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import logic.Customer;
+import logic.Goods;
+import logic.GoodsPosition;
 import logic.Order;
 import util.CreatingConnection;
 
 public class frmCustomer extends javax.swing.JFrame {
     
     ArrayList<Order> orders;
+    ArrayList<GoodsPosition> goodsPositions;
     
     private Customer customer;
     
@@ -29,15 +32,37 @@ public class frmCustomer extends javax.swing.JFrame {
         data = new String[orders.size()+1][5];
         if (orders.size()!= 0){
             for(int i=0; i < orders.size();i++){
-                data[0][0]=orders.get(i).getState();
+                data[i][0]=orders.get(i).getState();
                 data[i][1]=""+orders.get(i).getAmount();
                 data[i][2]=""+orders.get(i).getSize();
                 data[i][3]=""+orders.get(i).getDate();
                 data[i][4]=""+orders.get(i).getDistrict().getDistrict();
             }
+            addTblGoods(orders.get(0));
         }
         TableModel model = new DefaultTableModel(data, columnNames);
         tblOrder.setModel(model);
+        tblOrder.setRowSelectionInterval(0, 0);
+    }
+    
+    private void addTblGoods(Order order){
+        goodsPositions = new ArrayList<>();
+        String[][] data = null;
+        String[] columnNames = {"Наименование", "Размер", "Количество", "Цена", "Сумма"};
+        GoodsPosition goodsPosition = new GoodsPosition();
+        goodsPositions = goodsPosition.getByOrder(order);
+        data = new String[goodsPositions.size()+1][5];
+        if(goodsPositions.size() !=0){
+            for(int i=0;i<goodsPositions.size();i++){
+                data[i][0]=goodsPositions.get(i).getGoods().getName();
+                data[i][1]=""+goodsPositions.get(i).getGoods().getSize();
+                data[i][2]=""+goodsPositions.get(i).getCount();
+                data[i][3]=""+goodsPositions.get(i).getGoods().getPrice();
+                data[i][4]=""+(goodsPositions.get(i).getCount()*goodsPositions.get(i).getGoods().getPrice());
+            }
+        }
+        TableModel model = new DefaultTableModel(data, columnNames);
+        tblGoods.setModel(model);
     }
 
     @SuppressWarnings("unchecked")
@@ -53,6 +78,8 @@ public class frmCustomer extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnClose = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblGoods = new javax.swing.JTable();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -95,6 +122,11 @@ public class frmCustomer extends javax.swing.JFrame {
             }
         });
         tblOrder.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tblOrder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblOrderMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblOrder);
 
         jLabel3.setText("Заявки:");
@@ -113,6 +145,19 @@ public class frmCustomer extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+
+        tblGoods.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblGoods);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,13 +178,16 @@ public class frmCustomer extends javax.swing.JFrame {
                                 .addComponent(txtAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel3)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -156,8 +204,10 @@ public class frmCustomer extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnClose)
@@ -175,12 +225,20 @@ public class frmCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        frmAddOrder frmAddOrder = new frmAddOrder(customer);
+        frmAddOrder.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void tblOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblOrderMouseClicked
+        int index = tblOrder.getSelectedRow();
+        if(orders.size()>=index){
+            addTblGoods(orders.get(index));
+        }
+    }//GEN-LAST:event_tblOrderMouseClicked
     /**
      * @param args the command line arguments
      */
@@ -216,6 +274,8 @@ public class frmCustomer extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tblGoods;
     private javax.swing.JTable tblOrder;
     private javax.swing.JLabel txtAddress;
     private javax.swing.JLabel txtName;

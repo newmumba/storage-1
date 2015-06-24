@@ -101,4 +101,24 @@ public class GoodsPosition implements IRepository<GoodsPosition>{
         
         con.setRecord(updateSQL);
     }
+    
+    public ArrayList<GoodsPosition> getByOrder(Order order) {
+        _goods =  new Goods();
+        _order = new Order();
+        ArrayList<GoodsPosition> goodsPositions = new ArrayList<>();
+        String selectSQL;
+        ResultSet rs;
+        selectSQL = "SELECT * FROM GoodsPositions WHERE id_order=" + order.getId();
+        try {
+            rs = con.getRecord(selectSQL);
+            while (rs.next()) {
+                goodsPositions.add(new GoodsPosition(rs.getInt(1),_goods.getById(rs.getInt(2)),
+                        _order.getById(rs.getInt(3)), rs.getInt(4)));      
+            }
+        } catch (SQLException ex) {
+            return null;
+        }
+        return goodsPositions;
+    }
+    
 }

@@ -185,7 +185,7 @@ public class PackingList implements IRepository<PackingList>{
     }
     
     //получить открытую накладную для указанного района
-    public PackingList getOpenPackingList(District _district){
+    public PackingList getOpen(District _district){
         String selectSQL;
         ResultSet rs;
         selectSQL = "SELECT * FROM PackingLists WHERE state = '{state}' and id_district = {district}";
